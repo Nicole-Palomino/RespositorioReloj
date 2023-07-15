@@ -1,0 +1,24 @@
+* {
+	margin:0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	background-image: url(/img/fondo1.jpg);
+	background-size:cover;
+	padding: 10px;
+}
+
+.reloj {
+    color: #fff;
+    font-size: 80px;
+    font-family: Arial;
+    letter-spacing: 5px;
+    text-align: center;
+    background-color: #ffffff00;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}

@@ -1,66 +1,47 @@
-(function(){
-	var actualizarHora = function(){
-		// Obtenemos la fecha actual, incluyendo las horas, minutos, segundos, dia de la semana, dia del mes, mes y año;
-		var fecha = new Date(),
-			horas = fecha.getHours(),
-			ampm,
-			minutos = fecha.getMinutes(),
-			segundos = fecha.getSeconds(),
-			diaSemana = fecha.getDay(),
-			dia = fecha.getDate(),
-			mes = fecha.getMonth(),
-			year = fecha.getFullYear();
 
-		// Accedemos a los elementos del DOM para agregar mas adelante sus correspondientes valores
-		var pHoras = document.getElementById('horas'),
-			pAMPM = document.getElementById('ampm'),
-			pMinutos = document.getElementById('minutos'),
-			pSegundos = document.getElementById('segundos'),
-			pDiaSemana = document.getElementById('diaSemana'),
-			pDia = document.getElementById('dia'),
-			pMes = document.getElementById('mes'),
-			pYear = document.getElementById('year');
+function cargarReloj(){
 
-		
-		// Obtenemos el dia se la semana y lo mostramos
-		var semana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
-		pDiaSemana.textContent = semana[diaSemana];
+    // Haciendo uso del objeto Date() obtenemos la hora, minuto y segundo 
+    var fechahora = new Date();
+    var hora = fechahora.getHours(); 
+    var minuto = fechahora.getMinutes(); 
+    var segundo = fechahora.getSeconds(); 
 
-		// Obtenemos el dia del mes
-		pDia.textContent = dia;
+    // Variable meridiano con el valor 'AM' 
+    var meridiano = "AM";
+    
+    
+    // Si la hora es igual a 0, declaramos la hora con el valor 12 
+    if(hora == 0){
 
-		// Obtenemos el Mes y año y lo mostramos
-		var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-		pMes.textContent = meses[mes];
-		pYear.textContent = year;
+        hora = 12;
+        
+    }
+    
+    // Si la hora es mayor a 12, restamos la hora - 12 y mostramos la variable meridiano con el valor 'PM' 
+    if(hora > 12) {
 
-		// Cambiamos las hora de 24 a 12 horas y establecemos si es AM o PM
+        hora = hora - 12;
 
-		if (horas >= 12) {
-			horas = horas - 12;
-			ampm = 'PM';
-		} else {
-			ampm = 'AM';
-		}
+        // Variable meridiano con el valor 'PM' 
+        meridiano = "PM";
 
-		// Detectamos cuando sean las 0 AM y transformamos a 12 AM
-		if (horas == 0 ){
-			horas = 12;
-		}
+    }
+    
+    // Formateamos los ceros '0' del reloj 
+    hora = (hora < 10) ? "0" + hora : hora;
+    minuto = (minuto < 10) ? "0" + minuto : minuto;
+    segundo = (segundo < 10) ? "0" + segundo : segundo;
+    
+    // Enviamos la hora a la vista HTML 
+    var tiempo = hora + ":" + minuto + ":" + segundo + " " + meridiano;    
+    document.getElementById("relojnumerico").innerText = tiempo;
+    document.getElementById("relojnumerico").textContent = tiempo;
 
-		// Si queremos mostrar un cero antes de las horas ejecutamos este condicional
-		// if (horas < 10){horas = '0' + horas;}
-		pHoras.textContent = horas;
-		pAMPM.textContent = ampm;
+    // Cargamos el reloj a los 500 milisegundos 
+    setTimeout(cargarReloj, 500);
+    
+}
 
-		// Minutos y Segundos
-		if (minutos < 10){ minutos = "0" + minutos; }
-		if (segundos < 10){ segundos = "0" + segundos; }
-
-		pMinutos.textContent = minutos;
-		pSegundos.textContent = segundos;
-	};
-
-	actualizarHora();
-	var intervalo = setInterval(actualizarHora, 1000);
-}())
+// Ejecutamos la función 'CargarReloj' 
+cargarReloj();
